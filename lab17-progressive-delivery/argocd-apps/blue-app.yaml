@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app-blue
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: /tmp/git-server/blue-green.git
+    targetRevision: HEAD
+    path: apps/sample-app/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: blue-env
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]
