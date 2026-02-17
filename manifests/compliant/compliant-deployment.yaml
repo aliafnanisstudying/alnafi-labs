@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compliant-app
+  labels:
+    environment: development
+    app: web-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-server
+  template:
+    metadata:
+      labels:
+        app: web-server
+        environment: development
+    spec:
+      containers:
+      - name: web-server
+        image: nginx:alpine
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
